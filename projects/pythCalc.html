@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Pythagorean Calculator</title>
+</head>
+<input id="a" Value="First Leg">
+<input id="b" value="second leg">
+<br>
+<button onClick="calculate()">Calculate</button>
+<div id="cont"></div>
+<script>
+function calculate() {document.getElementById("cont").innerHTML=Math.sqrt(Math.pow(parseInt(document.getElementById("a").value), 2) + Math.pow(parseInt(document.getElementById("b").value), 2))}
+</script>
+</html>

@@ -1,0 +1,36 @@
+html {
+	background-color: red;
+}
+
+
+input {
+	background-color: #FF3030;
+	border: outset darkorange;
+	margin: 2px;
+	outline:none;
+}
+input:active {
+	border: inset darkorange;
+}
+
+
+.buttons {
+	width: 24%;
+	float: left;
+}
+.buttons, .body {
+	background-color: red;
+	border: 5px solid orange;
+}
+.body {
+	width: 74%;
+	float: right;
+}
+
+
+#Home {
+	display: block;
+}
+#Fighter, #Healing, #normal {
+	display: none;
+}

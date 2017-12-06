@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Snake++</title>
+  <style>
+  body {
+    background-color: black;
+  }
+  #canvas {
+    border: 3px solid blue;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    margin: -400px 0 0 -400px;
+  }
+  </style>
+</head>
+<body>
+  <canvas id="canvas" width="800" height="800"></canvas>
+  <script>
+  var canvas = document.getElementById("canvas");
+  var ctx = canvas.getContext("2d");
+  var speed = 10;
+  var tilesize = 10, boardsize = canvas.width/tilesize;
+  function playerbase() {
+    this.x = boardsize/2;
+    this.y = boardsize/2;
+    this.xv = 0;
+    this.yv = 0;
+    this.length = 3;
+    this.snek = [{x:20, y:20}];
+    this.aplx = Math.floor(Math.random()*boardsize);
+    this.aply = Math.floor(Math.random()*boardsize);
+  };
+  var player = new playerbase();
+  var gameinterval;
+  var state = "menu";
+  var normalspeed = 11;
+  function menu() {
+    state = "menu";
+    canvas.style.border = "3px solid blue";
+    canvas.style.margin = "-400px 0 0 -400px";
+    canvas.height = 800;
+    canvas.width = 800;
+		
+    ctx.fillStyle =  "black";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "red";
+    ctx.font = "small-caps 50px sans-serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "alphabetic";
+    ctx.fillText("Snake++", 400, 300);
+
+    ctx.fillStyle = "lime";
+    ctx.fillRect(280, 350, 100, 60);//baby     -row1
+    ctx.fillRect(420, 350, 100, 60);//toddler-row1
+    
+    ctx.fillRect(280, 430, 100, 60);//BONUS-row2
+    ctx.fillRect(420, 430, 100, 60);//tween-row2
+
+    ctx.fillRect(280, 510, 100, 60);//(deluxe)teen-row3
+    ctx.fillRect(420, 510, 100, 60);//MASTER      -row3
+
+    ctx.fillStyle = "black";
+    ctx.font = "25px sans-serif";
+    ctx.textBaseline = "middle";
+    ctx.fillText("Baby", 330, 380);
+    ctx.fillText("Toddler", 470, 380);
+
+    ctx.fillText("BONUS", 330, 460);
+    ctx.fillText("Tween", 470, 460);
+
+    ctx.fillText("Teen", 330, 540);
+    ctx.fillText("MASTER", 470, 540);
+  }
+  canvas.addEventListener("click", buttonpress);
+  function buttonpress(e) {
+    if (state == "menu") {
+			tilesize = 10;
+      var X = e.pageX - this.offsetLeft;
+      var Y = e.pageY - this.offsetTop;
+      if (X >= 420 && X <= 520) {
+        if (Y >= 300 && Y <= 410) {
+          speed = 10;
+          state = "game";
+          startgame();
+        } else if (Y >= 430 && Y <= 490) {
+          speed = 11;
+          state = "game";
+          startgame();
+        } else if (Y >=510 && Y <= 570) {
+					tilesize = 20;
+          speed = 11;
+          state = "deluxe";
+          canvas.style.border = "3px solid red";
+          startgame();
+        }
+      } else if (X >= 280 && X <= 380) {
+				if (Y >= 350 && Y <= 410) {
+					speed = 7.5;
+					tilesize = 20;
+					state = "game";
+					startgame();
+				} else if (Y >= 430 && Y <= 490) {
+					speed = 15;
+					tilesize = 20;
+					state = "BONUS";
+          canvas.style.border = "3px solid red";
+					startgame();
+				} else if (Y >=510 && Y <= 570) {
+          speed = 11;
+          state = "deluxe";
+          canvas.style.border = "3px solid red";
+          startgame();
+        }
+			}
+    }
+  }
+  window.onload = menu;
+  function startgame() {
+		boardsize = canvas.width/tilesize;
+		player = new playerbase();
+  	normalspeed = 11;
+    gameinterval = window.setInterval(game, 1000/speed);
+  }
+
+  function game() {
+    player.x += player.xv;
+    player.y += player.yv;
+    var hitwall = false;
+    if (player.x >= boardsize) {
+      player.x = 0;
+      hitwall = true;
+    } else if (player.x < 0) {
+      player.x = boardsize-1;
+      hitwall = true;
+    }
+    if (player.y >= boardsize) {
+      player.y = 0;
+      hitwall = true;
+    } else if (player.y < 0) {
+      player.y = boardsize-1;
+      hitwall = true;
+    }
+    if ((state == "deluxe" || state == "BONUS") && hitwall) {
+      state = "menu";
+      window.clearInterval(gameinterval);
+      window.setTimeout(menu, 1000/speed);
+      player = new playerbase();
+    }
+
+    ctx.fillStyle =  "black";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#00ff00";
+    for (var i = 0; i < player.snek.length; i++) {
+      ctx.fillRect(player.snek[i].x*tilesize, player.snek[i].y*tilesize, tilesize-2, tilesize-2);
+      if (player.snek[i].x==player.x && player.snek[i].y==player.y) {
+        var ok = player.length > 3;
+        //alert(ok);
+        player.length = 3;
+        if (!(player.xv == 0 && player.yv == 0) && ok) {
+          state = "menu";
+          window.clearInterval(gameinterval);
+          window.setTimeout(menu, 1000/speed);
+        }
+      }
+    }
+
+    player.snek.push({x:player.x, y:player.y});
+    while (player.snek.length > player.length) {
+      player.snek.shift();
+    }
+
+    if (player.x == player.aplx && player.y == player.aply) {
+			if (state == "BONUS") {
+				player.length += 3;
+			} else {
+      	player.length++;
+			}
+      if (speed > 10 && state != "BONUS") {
+        speed += 1;
+        if (state == "deluxe") {
+          canvas.width -= tilesize;
+          canvas.height -= tilesize;
+          if (canvas.width <= 200) {
+            canvas.width = 200;
+            canvas.height = 200;
+          }
+          canvas.style.margin = "-" + (canvas.width/2) + "px 0 0 -" + (canvas.height/2) + "px";
+          boardsize = canvas.width/tilesize;
+          normalspeed++;
+          speed = Math.floor(Math.random()*5) + normalspeed;
+        }
+        window.clearInterval(gameinterval);
+        gameinterval = window.setInterval(game, 1000/speed);
+      }
+      player.aplx = Math.floor(Math.random()*boardsize);
+      player.aply = Math.floor(Math.random()*boardsize);
+      while (state == "deluxe" && (player.aplx == boardsize-1 || player.aply == boardsize-1)) {
+        player.aplx = Math.floor(Math.random()*boardsize);
+        player.aply = Math.floor(Math.random()*boardsize);
+      }
+    }
+    ctx.fillStyle = "red";
+    ctx.fillRect(player.aplx*tilesize, player.aply*tilesize, tilesize-2, tilesize-2);
+
+    ctx.font = "25px sans-serif";
+    ctx.fillStyle = "white";
+    ctx.textBaseline = "middle";
+    ctx.fillText(player.length, 12.5, 12.5);
+  }
+  document.addEventListener("keydown", function (e) {
+    if (state == "game" || state == "deluxe" || state == "BONUS") {
+      switch(e.keyCode) {
+        case 37 || 100:
+          if (player.xv != 1) {
+            player.xv = -1;
+            player.yv = 0;
+          }
+          break;
+        case 38 || 104:
+          if (player.yv != 1) {
+            player.yv = -1;
+            player.xv = 0;
+          }
+          break;
+        case 39 || 102:
+          if (player.xv != -1) {
+            player.xv = 1;
+            player.yv = 0;
+          }
+          break;
+        case 40 || 98:
+          if (player.yv != -1) {
+            player.yv = 1;
+            player.xv = 0;
+          }
+          break;
+      }
+    }
+  });
+  </script>
+</body>
+</html>

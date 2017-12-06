@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Torture With My Baby</title>
+		<style>
+			canvas {
+				border: 1px solid black;
+				display: block;
+				margin: auto;
+			}
+			h1, h3, p {
+				text-align: center;
+			}
+			h3 {
+				font-style: italic;
+				color: #777777;
+			}
+			body {
+				width: 60%;
+				background-color: lightgray;
+				margin: auto;
+			}
+			html {
+				width: 100%;
+				background-color: gray;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Torture With My Baby</h1>
+		<h3>Idea by Felix Nie, code by Felix Nie with help from Victor Veytsman, reprogrammed from Khan Academy Processing JS to Javascript by Victor Veytsman</h3>
+		<p>You must babysit the torturer's baby while keeping inside the torture ring. Make sure the baby doesn't bite your ankles!</p>
+		<canvas id="canvas" width="400" height="400"></canvas>
+		Difficulty: <input type="range" id="slider" min="5" max="50" value="10"/>
+		<h3>Felix's Original Code: (Khan Academy Processing JS)</h3>
+		<pre>
+var state = "game";
+var circleSIZE = 400;
+var player = 6;
+var playerX = 200;
+var playerY = 200;
+var aiX = 250;
+var aiY = 200;
+var ai = 6;
+var start = millis();
+var difficulty = 10;
+difficulty = difficulty/10;
+var speed = difficulty;
+//^Put variables up here
+textSize(50);
+//^everything above here is the enclosing circle
+draw = function() {
+    if (state === "menu") {
+        background(0);
+        textAlign(CENTER, CENTER);
+        fill(255);
+        //text(message, x, y) where x and y are the center of the text
+        text("Torture with my baby", 10, 50, 400, 150);
+        rect(160,250,100,100);
+        fill(0);
+        text("&#9654;", 214, 301);
+        if (mouseIsPressed && mouseX >= 160 && mouseX <= 260 && mouseY >= 250 && mouseY <= 350) {
+            start = millis();
+            state = "game";
+        }
+    } else if (state === "game") {
+        fill(0);
+        background(0);
+        stroke(255, 0, 0);
+        strokeWeight(5);
+        ellipse(200,200,circleSIZE,circleSIZE);
+        //^everything above here is the enclosing circle
+        fill(255, 145, 0);
+        stroke(255, 145, 0);
+        ellipse(aiX, aiY, ai, ai);
+        fill(255,255,255);
+        stroke(255, 255, 255);
+        ellipse(playerX,playerY, player, player);
+        circleSIZE = circleSIZE-speed;
+        if ((sqrt(pow(playerX-200, 2) + pow(playerY-200, 2))) >= (circleSIZE/2)) {
+        state = "menu";
+    }
+        if (circleSIZE <= 80) {
+            speed = -speed;
+        }
+
+        if (circleSIZE >= 400) {
+            speed = -speed;
+        }
+    if (aiY < playerY) {
+        aiY += difficulty;
+    }
+    if (playerY < aiY) {
+        aiY -= difficulty;
+    }
+    if (playerX > aiX) {
+        aiX += difficulty;
+    }
+    if (playerX < aiX) {
+        aiX -= difficulty;
+    }
+    if (playerX >= aiX-4 && playerX <= aiX+4 && playerY >= aiY-4 && playerY <= aiY+4) {
+        state = "menu";
+    }
+    //((millis()-start)/1000).toFixed(2)
+    textAlign(LEFT, TOP);
+    text(((millis()-start)/1000).toFixed(2), 10, 0);
+    }
+};
+
+    mouseMoved = function() {
+        playerX = mouseX;
+        playerY = mouseY;
+    };
+		</pre>
+		<script>
+
+			var canvas = document.getElementById("canvas");
+			var ctx = canvas.getContext("2d");
+			var state = "menu";
+			var circleSIZE = 400;
+			var player = 6;
+			var playerX = 150;
+			var playerY = 200;
+			var aiX = 250;
+			var aiY = 200;
+			var ai = 6;
+			var counter = 0; //My own timer method
+			var difficulty = 10;
+			difficulty = difficulty/10;
+			var speed = difficulty;
+
+			document.getElementById("slider").addEventListener("change", function() {
+				difficulty = document.getElementById("slider").value/10;
+			});
+			ctx.font = "50px Arial";
+			canvas.addEventListener("click", pressed);
+			function pressed(e) {
+				if (state == "menu") {
+					var mouseX = e.pageX - canvas.offsetLeft;
+					var mouseY = e.pageY - canvas.offsetTop;
+					if (mouseX >= 150 && mouseX <= 250 && mouseY >= 250 && mouseY <= 350) {
+						counter = 0;
+						aiX = 250;
+						aiY = 200;
+						circleSIZE = 400;
+						state = "game";
+						speed = difficulty;
+					}
+				}
+			}
+			function draw() {
+				if (state == "menu") {
+					ctx.fillStyle = "black";
+					ctx.fillRect(0, 0, 400, 400);
+					ctx.textAlign = "center";
+					ctx.textBaseline = "middle";
+					ctx.fillStyle = "white";
+					wrapText(ctx, "Torutre with my baby", 200, 100, 400, 60);
+					//ctx.fillText("Torture with my baby", 200, 150);
+					ctx.fillRect(150,250,100,100);
+					ctx.fillStyle = "black";
+					ctx.fillText("Play", 200, 300);
+					//if menu is handled seperately
+				} else if (state == "game") {
+					ctx.fillStyle = "black";
+					ctx.fillRect(0, 0, 400, 400);
+					ctx.strokeStyle = "red";
+					ctx.lineWidth = 5;
+					//draws circle below
+					ctx.beginPath();
+					ctx.arc(200,200,circleSIZE/2,0,2*Math.PI);
+					ctx.stroke();
+					ctx.fill();
+					//end draw circle
+					ctx.fillStyle = "rgb(255, 145, 0)";
+					ctx.strokeStyle = "rgb(255, 145, 0)";
+					ctx.beginPath();
+					ctx.arc(aiX,aiY,ai/2,0,2*Math.PI);
+					ctx.stroke();
+					ctx.fill();
+					ctx.fillStyle = "white";
+					ctx.strokeStyle = "white";
+					ctx.beginPath();
+					ctx.arc(playerX,playerY,player/2,0,2*Math.PI);
+					ctx.stroke();
+					ctx.fill();
+					circleSIZE -= speed;
+					if (Math.sqrt(Math.pow(playerX-200, 2) + Math.pow(playerY-200, 2)) >= (circleSIZE/2)) {
+						state = "menu";
+					}
+					if (circleSIZE <= 80 || circleSIZE >= 400) {
+						speed = -speed;
+					}
+					if (aiY < playerY) {
+						aiY += difficulty;
+					} else if (aiY > playerY) {
+						aiY -= difficulty;
+					}
+					if (playerX > aiX) {
+						aiX += difficulty;
+					} else if (playerX < aiX) {
+						aiX -= difficulty;
+					}
+					if (playerX >= aiX-4 && playerX <= aiX+4 && playerY >= aiY-4 && playerY <= aiY+4) {
+						state = "menu";
+					}
+					ctx.textAlign = "left";
+					ctx.textBaseline = "top";
+					ctx.fillStyle = "white";
+					ctx.fillText(Math.round(counter*1000)/1000, 10, 0);
+					counter += 0.01;
+				}
+			}
+			canvas.addEventListener("mousemove", mxmyisplayer);
+			function mxmyisplayer(e) {
+				var mouseX = e.pageX - canvas.offsetLeft;
+				var mouseY = e.pageY - canvas.offsetTop;
+				playerX = mouseX;
+				playerY = mouseY;
+			}
+			setInterval(draw, 10);
+
+/*from the internets:*/
+function wrapText(context, text, x, y, maxWidth, lineHeight) {
+        var words = text.split(' ');
+        var line = '';
+
+        for(var n = 0; n < words.length; n++) {
+          var testLine = line + words[n] + ' ';
+          var metrics = context.measureText(testLine);
+          var testWidth = metrics.width;
+          if (testWidth > maxWidth && n > 0) {
+            context.fillText(line, x, y);
+            line = words[n] + ' ';
+            y += lineHeight;
+          }
+          else {
+            line = testLine;
+          }
+        }
+        context.fillText(line, x, y);
+      }
+window.onerror = function(msg, url, linenumber) {
+    alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
+    return true;
+}
+		</script>
+	</body>
+</html>

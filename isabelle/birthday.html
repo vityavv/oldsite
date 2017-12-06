@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Happy Birthday</title>
+<style>
+canvas {
+border:1px solid black;
+}
+@font-face {
+font-family: 'SFCartoonistHand';
+src: url('SFCartoonistHand.ttf');
+}
+* {
+font-family: "SFCartoonistHand";
+}
+</style>
+</head>
+<body>
+<canvas width="740" height="500" id="card"></canvas><br>
+<button onClick="start()">Open the card</button>
+<script>
+var canvas = document.getElementById("card").getContext("2d");
+var img = new Image(368, 490); img.src="HB.jpg";
+var i = 368;
+canvas.lineWidth = "2";
+canvas.font = "50px SFCartoonistHand";
+
+var cardtext = "Happy Birthday! I hope that your 12th year is full of fun and happiness, and I hope that the years to come are just the same. -Victor";
+
+window.onload = drawit;
+function drawit() {
+canvas.fillStyle = "white";
+canvas.fillRect(0, 0, 740, 500);
+canvas.fillStyle = "black";
+canvas.fillRect(369, 4, i+2, 492);
+canvas.drawImage(img, 370, 5, i, 490);
+canvas.strokeRect(370, 5, 368, 490);
+}
+
+function start() {
+i = 368;
+var openinginterval = setInterval(function(){
+drawit();
+i-=1;
+if (i === 0) {
+clearInterval(openinginterval);
+var keepopening = setInterval(function(){
+canvas.fillStyle = "#FFF";
+canvas.beginPath();
+canvas.rect(370, 5, i, 490);
+canvas.fill();
+canvas.stroke();
+i--;
+if (i === -368) {
+clearInterval(keepopening);
+i = 255;
+var textmake = setInterval(function() {
+canvas.fillStyle = "rgb(" + i + "," + i + "," + i + ")";
+canvas.fillText("Dear Isabelle,", 375, 60);
+wrapText(canvas, cardtext, 375, 150, 366, 50);
+i-=0.5;
+if (i === 0) {
+clearInterval(textmake);
+}
+}, 10);
+}
+}, 10);
+}
+}, 10);
+}
+
+//THANK YOU HTML5CANVAS TUTORIAL
+function wrapText(context, text, x, y, maxWidth, lineHeight) {
+        var words = text.split(' ');
+        var line = '';
+
+        for(var n = 0; n < words.length; n++) {
+          var testLine = line + words[n] + ' ';
+          var metrics = context.measureText(testLine);
+          var testWidth = metrics.width;
+          if (testWidth > maxWidth && n > 0) {
+            context.fillText(line, x, y);
+            line = words[n] + ' ';
+            y += lineHeight;
+          }
+          else {
+            line = testLine;
+          }
+        }
+        context.fillText(line, x, y);
+      }
+</script>
+</body>
+</html>

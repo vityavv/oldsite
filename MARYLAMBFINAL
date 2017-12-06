@@ -1,0 +1,42 @@
+use_synth :dsaw
+define :drumloop do
+  sample :drum_heavy_kick
+  sleep 0.375
+  sample :drum_cymbal_pedal
+  sleep 0.375
+  sample :sn_dolf
+  sleep 0.375
+  sample :drum_cymbal_pedal
+  sleep 0.375
+end
+12.times do
+  drumloop
+end
+define :loopit do |notelow, notehigh|
+  play notelow
+  sleep 0.75
+  6.times do
+    play notehigh, release: 0.375
+    sleep 0.12
+  end
+  play notelow
+  sleep 0.375
+  play notelow
+  sleep 0.375
+  3.times do
+    play notehigh, release: 0.375
+    sleep 0.12
+  end
+  play notelow
+  sleep 0.375
+end
+2.times do
+  loopit :G1, :G3
+  loopit :F1, :F3
+end
+play :G1
+sleep 10
+2.times do
+  loopit :G1, :G3
+  loopit :F1, :F3
+end

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<!--
+
+
+!!!!!!!!!!HUGE DISCLAIMER!!!!!!!!!!!
+
+MY CODE IS A MESS, PLEASE FORGIVE ME
+
+
+-->
+<html>
+	<head>
+		<title>TeamTallyer</title>
+		<style>
+			#table {
+				display: none;
+			}
+			h1 {
+				font-size: 150px;
+			}
+			/*STACK. OVERFLOW. */
+			table {
+				border-collapse: collapse;
+				width: 100%;
+				text-align: center;
+			}
+			table td, table th {
+				border: 1px solid black;
+			}
+			table tr:first-child th {
+				border-top: 0;
+			}
+			table tr:last-child td {
+				border-bottom: 0;
+			}
+			table tr td:first-child,
+			table tr th:first-child {
+				border-left: 0;
+			}
+			table tr td:last-child,
+			table tr th:last-child {
+				border-right: 0;
+			}
+			</style>
+	</head>
+	<body>
+		<div id="table">
+			<table>
+				<tr id="teams">
+				</tr>
+				<tr id="points"></tr>
+				<tr id="counters"></tr>
+			</table>
+			<div>
+				<center>
+					<button onClick="starttimer()">START TIMER</button>
+					<button onClick="goback()">Go Back</button>
+					<h1 id="timer"></h1>
+				</center>
+			</div>
+		</div>
+		<div id="start">
+			<h2>Tables:</h2>
+			<button onClick="addtable()">Add Table</button><button onClick="minustable()">Remove current table</button><br>
+			How many teams do you want?
+			<br><button onClick="addteam()">+</button><button onClick="minusteam()">-</button><br><br>
+			<div id="1">
+				<h3>Table 1</h3>
+				<button onClick="changecurr(0)">Change To Current Table</button><br><br>
+				Name your teams:<br>
+				<p id="1team1input">Team 1: <input id="1team1name" onChange="updatencs()">Team Color (optional): <input id="1team1color" onChange="updatencs()"></p>
+			</div>
+		</div>
+		<button id="startbutton" onClick="starttally()">Start Tally</button>
+		<button onClick="dev()">DEV</button>
+		<script>
+			window.onLoad = loadtable();
+			
+			var tables;
+			var curr = 0;
+			var timer, time = 60;
+
+			function addtable() {
+				tables.push([[0],[],[]]);
+				curr++;
+				var newdiv = document.createElement("div");
+				newdiv.setAttribute("id", curr+1);
+				newdiv.innerHTML = '<h3>Table ' + (tables.length) + '</h3><button onClick="changecurr(' + (tables.length-1) + ')">Change To Current Table</button><br><br>Name your teams:<br><p id="' + (tables.length) +'team1input">Team 1: <input id="' + (tables.length) + 'team1name" onChange="updatencs()">Team Color (optional): <input id="' + (tables.length) + 'team1color" onChange="updatencs()"></p>';
+				document.getElementById("start").appendChild(newdiv);
+				updatelocal()
+			}
+
+			function minustable() {
+				if (tables.length > 1) {
+					document.getElementById((curr+1)).remove();
+					tables.splice((tables.length-1), 1);
+					changecurr(tables.length-1);
+				} else {
+					alert("You can't have less than one table!");
+				}
+			}
+
+			function changecurr(newcurr) {curr = newcurr}
+			function addteam() {
+				var newp = document.createElement("p");
+				newp.setAttribute("id", (curr+1) + "team" + (tables[curr][0].length+1) + "input");
+				newp.innerHTML = "Team " + (tables[curr][0].length+1) + ": <input id='" + (curr+1) + "team" + (tables[curr][0].length+1) + "name' onChange='updatencs()'>Team Color (optional) : <input id='" + (curr+1) + "team" + (tables[curr][0].length+1) + "color' onChange='updatencs()'>";
+				document.getElementById((curr+1)).appendChild(newp);
+				tables[curr][0].push(0);
+				tables[curr][1].push("Who knows?");
+				tables[curr][2].push("Who knows?");
+				updatelocal()
+			}
+			function minusteam() {
+				if (tables[curr][0].length > 1) {
+					document.getElementById((curr+1)+"team"+tables[curr][0].length+"input").remove();
+					tables[curr][0].splice((tables[curr][0].length-1), 1);
+					tables[curr][1].splice((tables[curr][1].length-1), 1);
+					tables[curr][2].splice((tables[curr][2].length-1), 1);
+				} else {
+					alert("You can't have less than one team!");
+				}
+				updatelocal()
+			}
+
+			function dev() {eval(prompt("Don't be dumb"))}
+
+			function updatencs(shaddup) {
+				for (var j = 0; j < tables.length; j++) {
+					for (var i = 0; i < tables[j][0].length; i++) {
+						tables[j][1][i] = document.getElementById((j+1) + "team" + (i+1) + "name").value;
+						tables[j][2][i] = document.getElementById((j+1) + "team" + (i+1) + "color").value;
+					}
+				}
+				if (!shaddup) updatelocal();
+			}
+
+
+			function starttally() {
+				document.getElementById("table").style.display = "block";
+				document.getElementById("start").style.display = "none";
+				document.getElementById("startbutton").style.display = "none";
+				for (var i = 0; i < tables[curr][0].length; i++) {
+					var newhead = document.createElement("th");
+					newhead.innerHTML = document.getElementById((curr+1) + "team" + (i+1) + "name").value;
+					newhead.style.width = (100/tables[curr][0].length) + "%";
+					newhead.style.fontSize = "50px";
+					newhead.style.background = document.getElementById((curr+1) + "team" + (i+1) + "color").value;
+					document.getElementById("teams").appendChild(newhead);
+
+					var newbody = document.createElement("td");
+					newbody.innerHTML = tables[curr][0][i];
+					newbody.style.width = (100/tables[curr][0].length) + "%";
+					newbody.style.fontSize = "100px";
+					newbody.setAttribute("id", "score" + (i+1));
+					newhead.style.background = document.getElementById((curr+1) + "team" + (i+1) + "color").value;
+					document.getElementById("points").appendChild(newbody);
+
+					var newcounter = document.createElement("td");
+					newcounter.innerHTML = "<button onClick='addone(" + (i) + ")'>+</button><button onClick='minusone(" + (i) + ")'>-</button>";
+					newcounter.style.width = (100/tables[curr][0].length) + "%";
+					document.getElementById("counters").appendChild(newcounter);
+				}
+			}
+
+			function goback() {
+				document.getElementById("table").style.display = "none";
+				document.getElementById("start").style.display = "block";
+				document.getElementById("startbutton").style.display = "block";
+				document.getElementById("table").innerHTML = '<table><tr id="teams"></tr><tr id="points"></tr><tr id="counters"></tr></table><div><center><button onClick="starttimer()">START TIMER</button><button onClick="goback()">Go Back</button><h1 id="timer"></h1></center></div>';
+			}
+			function addone(index) {
+				tables[curr][0][index]++;
+				document.getElementById("score" + (index+1)).innerHTML = tables[curr][0][index];
+				updatelocal()
+			}
+			function minusone(index) {
+				tables[curr][0][index]--;
+				document.getElementById("score" + (index+1)).innerHTML = tables[curr][0][index];
+				updatelocal()
+			}
+
+			function starttimer() {
+				clearInterval(timer);
+				time = prompt("How long should the timer be (seconds)");
+				document.getElementById("timer").innerHTML = time;
+				time--
+				timer = setInterval(function(){
+					document.getElementById("timer").innerHTML = time;
+					time--
+					if (time < 0) {
+						clearInterval(timer);
+						var whistle = new Audio("whistle.mp3");
+						whistle.play();
+					}
+				}, 1000);
+			}
+
+			function updatelocal() {
+				updatencs("Just in case (shut up, future me)");
+				var newstring = "";
+				newstring += "[";
+				for (var i = 0; i < tables.length; i ++) {
+					newstring += "[[";
+					newstring += tables[i][0];
+					newstring += "],[";
+					for (var j = 0; j < tables[i][1].length; j++) {
+						if (typeof tables[i][1][j] == "string") {
+							newstring += '"';
+							newstring += tables[i][1][j];
+							(j == tables[i][1].length-1) ? newstring += '"' : newstring += '",';
+						}
+					}
+					newstring += "],[";
+					for (var j = 0; j < tables[i][2].length; j++) {
+						console.log(j);
+						console.log(tables[i][2][j]);
+						if (typeof tables[i][2][j] == "string") {
+							newstring += '"';
+							newstring += tables[i][2][j];
+							(j == tables[i][2].length-1) ? newstring += '"' : newstring += '",';
+						}
+					}
+					if (i == tables.length-1) {
+						newstring += "]]]"
+					} else {
+						newstring += "]],";
+					}
+				}
+				localStorage.tables = newstring;
+			}
+			function loadtable() {
+				if (localStorage.tables) {
+					curr = 0;
+					tables = JSON.parse(localStorage.tables);
+					document.getElementById((curr+1)).remove();
+					for (var i = 0; i < tables.length; i++) {
+						console.log("j is" + i);
+						curr = i;
+						var newdiv = document.createElement("div");//addtable
+						newdiv.setAttribute("id", curr+1);
+						newdiv.innerHTML = '<h3>Table ' + (curr+1) + '</h3><button onClick="changecurr(' + curr + ')">Change To Current Table</button><br><br>Name your teams:<br><p id="' + (curr+1) +'team1input">Team 1: <input id="' + (curr+1) + 'team1name" onChange="updatencs()">Team Color (optional): <input id="' + (curr+1) + 'team1color" onChange="updatencs()"></p>';
+						document.getElementById("start").appendChild(newdiv);//end addtable
+						document.getElementById((curr+1) + "team1input").remove();
+						for (var j = 0; j < tables[i][0].length; j++) {
+							var newp = document.createElement("p");//addteam
+							console.log("curr is" + curr);
+							newp.setAttribute("id", (curr+1) + "team" + (j+1) + "input");
+							newp.innerHTML = "Team " + (j+1) + ": <input id='" + (curr+1) + "team" + (j+1) + "name' onChange='updatencs()'>Team Color (optional) : <input id='" + (curr+1) + "team" + (j+1) + "color' onChange='updatencs()'>";
+							document.getElementById((curr+1)).appendChild(newp);//end addteam
+							
+							document.getElementById((curr+1) + "team" + (j+1) + "name").value = tables[curr][1][j];
+							document.getElementById((curr+1) + "team" + (j+1) + "color").value = tables[curr][2][j];
+						}
+					}
+					tables = JSON.parse(localStorage.tables);
+				} else {
+					tables = [
+						[[/*scores*/0],[/*names*/],[/*colors*/]]
+					];
+				}
+			}
+		</script>
+	</body>
+</html>

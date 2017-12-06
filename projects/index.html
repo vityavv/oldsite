@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Projects</title>
+        <link rel="stylesheet" type="text/css" href="projectcss.css" />
+        <script>
+            function rgbnow() {
+                alert("Congradulations! You found the secret project!");
+                document.getElementById("head").style.background = prompt("Instert new background color", "color name, or advanced: rgb(), rgba(), or #hex");
+                document.getElementById("findit").innerHTML = "You found it!";
+            }
+        </script>
+    </head>
+    <body>
+        <div id="head" onClick="rgbnow();">
+            <h1>Projects</h1>
+        </div>
+        <div id="c1">
+            <h1>Introduction</h1>
+            These are my projects that I am working on for fun. The collection is constantly growing and growing. Here are the projects I have so far.<br>
+            There is a project hidden in this webpage! <span id="findit">Try to find it!</span>
+        </div>
+        <div id="c2">
+            <h1>Projects</h1>
+            <ul>
+                <li><a href="dayadder.html">Day Adder</a>, a project my mom challanged me to make</li>
+                <li><a href="hextime.html">Hex Time</a>, a clock that shows the time as the hex value of the background</li>
+                <li><a href="jeporady.html">Victor Jeopardy</a>, a jeopardy game based on me!</li>
+                <li>My <a href="wysiwyg.html">WYSIWYG</a> editor.</li>
+                <li>A <a href="program.html">program</a> that calculates the position of a 17 by 106 pixel drawing on a graph of Tupper's self-refferential formula. WARNING: WORK IN PROGRESS. THIS MIGHT NOT WORK AL OF THE TIME</li>
+                <li>A <a href="Animation/DrawAnim.html">SPEEDRAWING TOOL</a> that is so epic and awesome I might as well MARRY IT!!!</li>
+                <li>An animated <a href="magic8ball.html">MAGIC 8 BALL</a> the likes of which NEVER BEFORE SEEN on the interwebz!!!!</li>
+            </ul>
+        </div>
+        <script src="../tgequalizer.js"></script>
+        <div id="foot">
+            <center><a href="..">Home</a></center>
+        </div>
+    </body>
+</html>

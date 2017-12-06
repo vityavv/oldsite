@@ -1,0 +1,5 @@
+html{background-color:aliceblue;}
+#head{text-align:center;background-color:orange;border-radius:50px;color:blue;}
+#c1, #c2{width:49%;background-color:red;border-radius:5px;color:green;}
+#c1{float:left;}
+#c2{float:right;}

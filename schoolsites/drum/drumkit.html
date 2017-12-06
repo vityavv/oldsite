@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Drum Kit</title>
+</head>
+<body>
+	<div>LEFT: BASS<br>UP: CYMBAL<br>RIGHT: HIHAT<br>DOWN: SNARE<br>CLICK HERE TO START<br><br></div>
+	<div>
+		UPLOAD YOUR OWN: <br>
+		LEFT: <input type="file" id="LEFT" /><br>
+		UP: <input type="file" id="UP" /><br>
+		RIGHT: <input type="file" id="RIGHT" /><br>
+		DOWN: <input type="file" id="DOWN" /><br><br>
+		<button id="RESET">RESET</button>
+		<button id="STOP">SHTAWP IT!!!</button>
+	</div>
+	<script>
+	var LEFT = new Audio("BASS.wav");
+	LEFT.volume = 1;
+	var UP = new Audio("CYMBAL.wav");
+	var RIGHT = new Audio("HIHAT.mp3");
+	RIGHT.volume = 0.5;
+	var DOWN = new Audio("SNARE.wav");
+	DOWN.volume = 0.25;
+	//changed the audio because STUPID CYMBAL SAMPLES ARE STUPID
+	document.addEventListener('keydown', function(event) {
+		if (event.keyCode == 37) {//left
+			LEFT.pause();
+			LEFT.currentTime = 0;
+			LEFT.play();
+		} else if (event.keyCode == 38) {//up
+			UP.pause();
+			UP.currentTime = 0;
+			UP.play();
+		} else if (event.keyCode == 39) {//right
+			RIGHT.pause();
+			RIGHT.currentTime = 0;
+			RIGHT.play();
+		} else if (event.keyCode == 40) {//down
+			DOWN.pause();
+			DOWN.currentTime = 0;
+			DOWN.play();
+		}
+	});
+	document.getElementById("LEFT").onchange = function() {
+		LEFT.src = URL.createObjectURL(this.files[0]);
+	}
+	document.getElementById("UP").onchange = function() {
+		UP.src = URL.createObjectURL(this.files[0]);
+	}
+	document.getElementById("RIGHT").onchange = function() {
+		RIGHT.src = URL.createObjectURL(this.files[0]);
+	}
+	document.getElementById("DOWN").onchange = function() {
+		DOWN.src = URL.createObjectURL(this.files[0]);
+	}
+	document.getElementById("RESET").onclick = function() {
+		LEFT.src = "BASS.wav";
+		UP.src = "CYMBAL.wav";
+		RIGHT.src = "HIHAT.mp3";
+		DOWN.src = "SNARE.wav";
+	}
+	document.getElementById("STOP").onclick = function() {
+		LEFT.pause();
+		LEFT.currentTime = 0;
+		UP.pause();
+		UP.currentTime = 0;
+		RIGHT.pause();
+		RIGHT.currentTime = 0;
+		DOWN.pause();
+		DOWN.currentTime = 0;
+	}
+	/*input.onchange = function(e){
+  var sound = document.getElementById('sound');
+  sound.src = URL.createObjectURL(this.files[0]);
+  // not really needed in this exact case, but since it is really important in other cases,
+  // don't forget to revoke the blobURI when you don't need it
+  sound.onend = function(e) {
+    URL.revokeObjectURL(this.src);
+  }
+}*/
+	</script>
+	</html>

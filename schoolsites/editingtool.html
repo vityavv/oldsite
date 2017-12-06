@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<!--
+YOUR WINNER REGEX IS...
+(?![A-Za-z0-9\-])(?![^<]*>)
+
+Your word before this
+-->
+	<head>
+		<title>Edititing Tool - Highlights more commonly used words in a brighter shade of red.</title>
+		<style>
+			body {
+				width: 100%;
+				height: 100%;
+			}
+			#content {
+				padding: 10px;
+				border: 2px solid black;
+				display: block;
+				resize: both;
+				width: 50%;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>EDITING TOOL</h1>
+		<h3>***Paste text in using Ctrl-SHIFT-V so that it doesn't copy the special formatting and kill everything***</h3>
+		<div id="content" contenteditable onkeyup="contentchange()"></div>
+		<script>
+			var content = document.getElementById("content");//This is what you type into
+			var words, newText;
+			function contentchange() {
+				//Set variables
+				var contentText = content.innerText.split(/\s/g);//split what's inside the div by all whitespace (tabs, spaces, etc.)
+				newText = contentText;//make a new variable for that
+				words = {};
+				for (var i = 0; i < newText.length; i++) {
+					//make it all lowercase
+					newText[i] = newText[i].toLowerCase();
+					//Remove double-quotes
+					newText[i] = newText[i].replace('"', "");
+					//Remove other punctuation except for single quotes (for contractions) and dashes
+					//The reason this regex is so long is because of google drive and unicode. it really just means /[^\w\s'’-]/g
+					newText[i] = newText[i].replace(/(?:[\0-\x08\x0E-\x1F!-&\(-,\.\/:-@\[-\^`\{-\x9F\xA1-\u167F\u1681-\u1FFF\u200B-\u2018\u201A-\u2027\u202A-\u202E\u2030-\u205E\u2060-\u2FFF\u3001-\uD7FF\uE000-\uFEFE\uFF00-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])/g,"");
+				}
+				//Remove all empty strings
+				newText = without(newText, "");
+				//Index everything; Make a variable holding how many times the word is used for every word
+				for (var i = 0; i < newText.length; i++) {
+					if (words[newText[i]]) {
+						words[newText[i]]++;
+					} else {
+						words[newText[i]] = 1;
+					}
+				}
+				var contentHTML = decodeHtml(content.innerHTML);//Take away all &nbsp; (because HTML does that)
+				//Get how many total words you have
+				var totalWords = 0;
+				for (var i = 0; i < Object.keys(words).length; i++) {
+					totalWords += words[Object.keys(words)[i]];
+				}
+				//For every word...
+				for (var i = 0; i < Object.keys(words).length; i++) {
+					var currentword = Object.keys(words)[i];
+					var currentwordcount = words[Object.keys(words)[i]];//get how many times the word was used
+					var color = 255-Math.round(256*50*currentwordcount/totalWords);//using math, derive how bright the red is for the word
+					//replace it with itself highlighted in a color
+					contentHTML = contentHTML.replace(new RegExp("\\b" + currentword + "\\b", "gi"), function(x) {return "<span style='background-color: rgb(255, "+color+","+color+")'>" + x + "</span>";});
+				}
+				//Finally, replace what's inside the text area with thenew, highlighted text.
+				content.innerHTML = contentHTML;
+			}
+			//Copied from stackoverflow, removes a certain string
+			function without(array, what) {
+				return array.filter(function(element) {
+					return element !== what;
+				});
+			}
+			//Because HTML does that
+			function decodeHtml(html) {
+				var txt = document.createElement("textarea");
+				txt.innerHTML = html;
+				return txt.value;
+			}
+			//PHP REGEX: (?<![A-Za-z0-9\-])[Hh][Ee][Ll][Ll][Oo](?![A-Za-z0-9\-])(?![^<]*>)
+		</script>
+	</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>population chart</title>
+  </head>
+  <body>
+    <canvas id="myCanvas" width="500" height="500"></canvas>
+    <script>
+      var populationData = {
+        
+      }
+      var context = document.getElementById("myCanvas").getContext("2d");
+      function start() {
+        context.beginPath();
+        context.moveTo(250, 0);
+        context.lineTo(250, 500);
+        context.stroke();
+        context.beginPath();
+        context.moveTo(0, 50);
+        context.lineTo(500, 50);
+        context.stroke();
+      }
+      
+      
+      
+      
+      window.onload = start;
+    </script>
+  </body>
+</html>

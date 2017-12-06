@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<body>
+<button onClick="runCrime()">Click me to see what crime you're charged with!</button>
+<script>
+var crimes = ["Robbery", "Armed Robbery", "1st degree murder", "2nd degree murder", "3rd degree murder", "4th degree murder", "Identity theft", "Cybercrime", "shoplifting", "trespassing", "bribery", "corruption", "misdemeanor", "assault"];
+function runCrime() {
+alert("You are charged with " + crimes[Math.floor(Math.random()*crimes.length)]);
+}
+</script>
+</body>
+</html>

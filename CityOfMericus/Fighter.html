@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>The City of Mericus</title>
+		<link reL="stylesheet" type="text/css" HREF="css.css" />
+	</head>
+	<body>
+		<div id="Fighter">
+			<div class="buttons">
+				<input type="button" value="Fight" onClick="attack();" /><br>
+				<input type="button" value="Run" onClick="runaway();" />
+				<hr>
+				<input type="button" value="Auto-Fight" onClick="auto();" />
+			</div>
+			<div class="body" id="fighter">
+			</div>
+		</div>
+		<div id="Home">
+			<div class="buttons">
+				<input type="button" value="Go into the forest to fight" onClick="newpage('Fighter');" />
+				<input type="button" value="Go into the healing shack" onClick="newpage('Healing');" />
+			</div>
+			<div class="body">
+				<center>
+					<h1>The city of Mericus</h1>
+					<p id="intro">
+						...Says that sign above your head. You just woke up, in front of a gate, with those letters above it. You can't remember anything about your past, you look to the side to see a man, in rugged, ripped clothes. You look at yourself and see that you are wearing a white tee-shirt and some jeans.<br>
+						"Admire those clothes for a while. Soon, they'll be ruined" says the man<br>
+						"Who are you?" you ask him, as you are standing up, "And why am I here?"<br>
+						"As for the first question, i'm Tom, the 'doorman' as they like to call me. As for the second question, no-one knows. Everyone comes here with a watch on their wrist, and a white tee and pants. No-one knows why, but they all go in, and fight for their lives, and sleep in their beds, and eat the food of the deceased animals as they sell the furs for money. And you, are now a part."<br>
+						You walk forward into the city and hear the gates close behind you. You put your hands in your pockets and start to look around, but you feel something.<br>
+						There is a piece of paper that says "Shack 35." And that is all<br>
+						You realize that this must be your house number.<br>
+						You walk to your shack, and see instructions on a little bedside table, next to your bed. They say simply to fight in the forest, and sell your furs to the king. They also say how to prepare and eat every animal you may incounter in the forest. It says that if you are in need of healing you may use my money at the healing shack.<br>
+					</p>
+					<p id="normal">
+						You look out of your window to see people rushing in and out of the healing shack and walking off into the forest. It seems quite peacefull, but you see that those people are geared up, looking ready for a fight. 
+					</p>
+					<p class="display">You have 30 hp and 0 gold</p>
+				</center>
+			</div>
+		</div>
+		<div id="Healing">
+			<div class="buttons">
+				<input type="button" value="Go back home." onClick="newpage('Home');" /><br>
+				<input type="button" value="Buy a potion" onClick="heal();" />
+			</div>
+			<div class="body">
+				<center>
+					<h1>The Healing Shack</h1>
+					<p>You walk inside, and see a bunch of salesmen, selling strange potions to several men. It doesn't look like a normal doctors office, or a hospital, because it's actually pretty dirty and brown. A single dim overhead lamp lights the whole place but there are a bunch of windows, so it isn't really dark.</p>
+					<p class="display"></p>
+				</center>
+			</div>
+		</div>
+		<script src="Fighter.js"></script>
+	</body>
+</html>

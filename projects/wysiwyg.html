@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>WYSIWYG Editor</title>
+		<!--It's pure javascript and HTML!-->
+		<script type="text/javascript" src="wysiwyg.js"></script>
+		<script type="text/javascript">
+			window.onbeforeunload = function(e) {//some code I modified from someone
+				if (used) {
+					e = e || window.event;//if no event is given we set to window.event
+					var message = "You have un-saved changes you haven't downloaded yet";//my message
+					if (e) {
+						e.returnValue = message;//if e exists (don't know why I do this) then return the message (this is for older browsers)
+					}
+		
+					return message;//newer browsers
+				}
+			};
+		</script>
+	</head>
+	<body onLoad="whenloadsman()"><!--call function-->
+		Title: <input name="title" id="title" size="100" />
+		<br><br>
+		<div id="buttons"><!--all of those glorious buttons and stuffs-->
+			Basic:
+			<input type="button" onClick="ibold()" value="B" />
+			<input type="button" onClick="iitalic()" value="I" />
+			<input type="button" onClick="iunderline()" value="U" />
+			<input type="button" onClick="ileft()" value="Left" />
+			<input type="button" onClick="icenter()" value="Center" />
+			<input type="button" onClick="iright()" value="Right" />
+			<input type="button" onClick="ijustified()" value="Justified" />
+			<br><br>
+			Font:
+			<input type="button" onClick="isize()" value="Size" />
+			<input type="button" onclick="icolor()" value="Color" />
+			<input type="button" onclick="isub()" value="Subscript" />
+			<input type="button" onclick="isup()" value="Superscript" />
+			<input type="button" onclick="istrike()" value="Strikethrough" />
+			<br><br>
+			Lists and rules:
+			<input type="button" onClick="iul()" value="Unordered List" />
+			<input type="button" onClick="iol()" value="Ordered List" />
+			<input type="button" onClick="ihr()" value="Horizontal Rule" />
+			<input type="button" onClick="iindent()" value="Indent" />
+			<input type="button" onClick="iunindent()" value="Unindent" />
+			<br><br>
+			Links and images:
+			<input type="button" onClick="ilink()" value="Link" />
+			<input type="button" onClick="iunlink()" value="Unlink" />
+			<input type="button" onClick="iimage()" value="Image" />
+			<br><br>
+			Editing (normal):
+			<input type="button" onClick="idelete()" value="Delete" />
+			<input type="button" onClick="iundo()" value="Undo" />
+			<input type="button" onClick="iredo()" value="Redo" />
+			<br><br>
+			Editing (enable clipboard capability in user.js):
+			<input type="button" onClick="icut()" value="Cut" />
+			<input type="button" onClick="icopy()" value="Copy" />
+			<input type="button" onClick="ipaste()" value="Paste" />
+			<br><br>
+		</div>
+		<iframe name="theeditor" id="theeditor" style="border: black 1px solid; height:300px; width:700px;resize:both"></iframe><!--where you do the typing stuffs-->
+		<br>
+		<a id="download" href="" download="filename.html"><input type="button" value="Download" onClick="used = false" /></a><!--button inside of download link-->
+	</body>
+</html>

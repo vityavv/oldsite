@@ -1,0 +1,53 @@
+#biggy {
+ font-size: 50px;
+  color: white;
+  text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+html {
+background-color: black;
+}
+
+#head {
+background-color: orange;
+color: blue;
+text-align: center;
+border-radius: 25px;
+}
+#head:hover {
+background-color: blue;
+color: orange;
+}
+#search {
+text-align: right;
+width: 250px;
+background-color: orange;
+}
+#c1, #c2 {
+background-color: darkcyan;
+color: black;
+width: 49%;
+}
+#c1 {
+float: left;
+}
+#c2 {
+float: right;
+}
+
+a {
+text-decoration: none;
+color: darkred;
+}
+a:hover {
+color: red;
+}

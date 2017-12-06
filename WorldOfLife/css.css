@@ -1,0 +1,16 @@
+html {
+   background: darkred;
+}
+#buttons {
+  width: 250px;
+  background: red;
+  border: solid orange 2px;
+  float: left;
+}
+#body {
+  height: 500px;
+  width: 1050px;
+  background: red;
+  border: solid orange 2px;
+  float: right;
+}

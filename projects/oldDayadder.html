@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Day adder</title>
+<script>
+var monthNames = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+var monthDates = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+var monthcount = 0;
+function continueToDay() {
+var select = document.getElementById("month");
+var monthValue = parseInt(select.options[select.selectedIndex].value);
+var monthDate = monthDates[monthValue];
+var dayText = '<p>Choose a day:</p><select id="daySelect">';
+for (var i = 0; i < monthDate; i++) {
+var j = i + 1;
+dayText += '<option value="' + j + '">' + j + '</option>';
+}
+dayText += '</select><p>How many days to add?</p><input id="toAdd"></input><input type="BUTTon" value="Continue" onClick="doDaMath();"></input>';
+document.getElementById("day").innerHTML = dayText;
+}
+function doDaMath() {
+var daySelect = document.getElementById("daySelect");
+var monthSelect = document.getElementById("month");
+var day = parseInt(daySelect.options[daySelect.selectedIndex].value);
+var monthValue = parseInt(monthSelect.options[monthSelect.selectedIndex].value);
+var dayToAdd = parseInt(document.getElementById("toAdd").value);
+var yearsLater = 0;
+var dayAtEnd = day + dayToAdd;
+while (dayAtEnd > monthDates[monthValue]) {
+dayAtEnd -= monthDates[monthValue];
+if (monthValue == 11) {
+monthValue = 0;
+yearsLater += 1;
+} else {
+monthValue += 1;
+}
+}
+var container = document.getElementById("container");
+container.innerHTML = "Your ending date is " + monthNames[monthValue] + " " + dayAtEnd + ", " + yearsLater + " years later.";
+}
+</script>
+</head>
+<body>
+<p>Choose a month:</p>
+<select id="month" onChange="continueToDay();">
+<option value="0">January</option>
+<option value="1">Febuary</option>
+<option value="2">March</option>
+<option value="3">April</option>
+<option value="4">May</option>
+<option value="5">June</option>
+<option value="6">July</option>
+<option value="7">August</option>
+<option value="8">September</option>
+<option value="9">October</option>
+<option value="10">November</option>
+<option value="11">December</option>
+</select>
+<input type="BUTTon" value="Continue" onClick="continueToDay();"></input>
+<div id="day">
+</div>
+<div id="container">
+</div>
+</body>
+</html>

@@ -1,0 +1,141 @@
+* {
+	color: #eeeeee;
+	font-family: "Encode Sans",  sans-serif;
+}
+
+#header {
+	position: fixed;
+	display: block;
+	width: 100%;
+	background: black;
+	/*color: white;*/
+	z-index: 9;
+	text-align: center;
+	color: #cccccc;
+}
+
+ul {
+	list-style-type: none;
+	margin: 8px 0;
+}
+li {
+	display: inline-block;
+	vertical-align: middle;
+}
+li a {
+	display: block;
+	text-decoration: none;
+	color: white;
+	padding: 8px;
+}
+li.active a {
+	background-color: #2c2c2c;
+}
+li h1 {
+	padding: 0;
+	margin: 0;
+}
+
+
+
+
+p {
+	left: 20%;
+	right: 20%;
+	position: relative;
+	width: 60%;
+}
+.heading {
+	font-size: 3em;
+	position: relative;
+	left: 18%;
+	margin: 0.25em;
+	width: 64%;
+}
+h3.heading, h2.heading {
+	font-size: 1.75em;
+	left: 18.25%;
+}
+
+div.sliderer {
+	animation-name: sliderer;
+	animation-duration: 15s;
+	animation-iteration-count: infinite;
+	width: 60%;
+	background-image: url("images/SubwayGuesser.png");
+	background-repeat: no-repeat;
+	background-position: top center;
+	height: 40%;
+	position:relative;
+	left: 20%;
+}
+@keyframes sliderer {
+	0% {background-image: url("images/SubwayGuesser.png");}
+	33% {background-image: url("images/Magic8Ball.png");}
+	66% {background-image: url("images/Tungsten.png"); background-position: center center;}
+	100% {background-image: url("images/SubwayGuesser.png"); background-position: top center;}
+}
+
+div.pannerer {
+	animation-name: pannerer;
+	animation-duration: 15s;
+	animation-iteration-count: infinite;
+	width: 60%;
+	background-repeat: no-repeat;
+	background-position: top center;
+	height: 40%;
+	position: relative;
+	left: 20%;
+}
+@keyframes pannerer {
+	0% {background-position: top center;}
+	50% {background-position: bottom center;}
+	100% {background-position: top center;}
+}
+#magic8ball {
+	background-image: url("images/Magic8Ball.png");
+}
+#subwayguesser {
+	background-image: url("images/SubwayGuesser.png");
+}
+#drawanim {
+	background-image: url("images/DrawAnim.png");
+}
+#gazingrainbow {
+	background-image: url("images/GazingRainbow.gif");
+}
+#tungsten {
+	background-image: url("images/Tungsten.png");
+}
+#ballsncubes {
+	background-image: url("images/ballsncubes.png");
+	background-size: cover;
+}
+#torturebaby {
+	background-image: url("images/torturebaby.png");
+}
+#pic2017 {
+	background-image: url("images/pic2017.png");
+}
+#news {
+	background-image: url("images/news.png");
+}
+#worksux {
+	background-image: url("images/worksux.png");
+}
+#song {
+	background-image: url("images/song.png");
+}
+#AstronomyQuiz {
+	background-image: url("images/AstronomyQuiz.png");
+}
+#snake {
+	background-image: url("images/snake++.png");
+}
+#big {
+	font-size: 100px;
+	vertical-align: 20%;
+}
+#editingtool {
+	background-image: url("images/editingtool.png");
+}

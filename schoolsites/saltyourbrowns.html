@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Salt your Hash Browns - A Guide to storing passwords</title>
+		<script src="sjcl.js"></script>
+		<script src="sha.js"></script>
+    <style>
+			img {
+				width: 60%;
+			}
+			.user {width: 40%;}
+      h1 {
+        text-align: center;
+      }
+      h3.subtitle {
+        color: darkgray;
+        font-style: italic;
+        text-align: center;
+      }
+      div.box {
+				float: left;
+        width: 30%;
+        height: 300px;
+        border: 3px solid black;
+				position: relative;
+				left: 20%;
+				right: 20%;
+      }
+      table, td, th {
+        border-collapse: collapse;
+        border: 1px solid gray;
+				word-break: break-all;
+      }
+      .stat { height: 200px; width:300px;}
+			.newupdate {word-break:break-all; width: 300px; display:inline-block;}
+      p, h3, h1, img {
+        clear: both;
+				width: 60%;
+				position: relative;
+				left: 20%;
+				right: 20%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Salt Your Hash Browns</h1>
+    <h3 class="subtitle">A guide to storing passwords</h3>
+    <h3>Section 1: A 10-year-old could crack it</h3>
+    <p>First, we must start with simple infastructure. And that means storing passwords in plain text. Unincrypted passwords are a horrible idea, and if you are storing passwords unincripted then you should probably shut down your website, but for now let's show that while demonstrating how the demonstrations will work.</p>
+    <p>Below is an example demo</p>
+    <center class="center"><div id="demo">
+      <div class="box">
+        <button onClick="registerone()">Register</button>
+        <button onClick="loginone()">Log In</button>
+        <div id="onestat" class="stat"></div>
+      </div>
+      <div class="box">
+        <table id="one">
+          <tr>
+            <th class="user">User</th>
+            <th>Password</th>
+          </tr>
+        </table>
+      </div>
+		</div></center>
+    <br>
+    <p>Pressing Register creates a new user which is seen in the database panel. Pressing Log In simulates a log in situation where you can log in as a user. Logging in doesn't do anything other than showing how the server (right) and client (left) communicate and what they communicate with. The communication reads from the bottom up, chronologically, like twitter or facebook (but smaller).</p>
+    <h3>Section 2: Encryption</h3>
+    <p>Encryption is the next step up from storing passwords in plain text. Here I am encrypting the password of a new user with itself in order to log in. Here I am encrypting each password with the password "password" (I know that's a lot of passwords but bear with me) so that I could check them later.</p>
+    <center class="center"><div id="demo">
+      <div class="box">
+        <button onClick="registertwo()">Register</button>
+        <button onClick="logintwo()">Log In</button>
+        <div id="twostat" class="stat"></div>
+      </div>
+      <div class="box">
+        <table id="two">
+          <tr>
+            <th class="user">User</th>
+            <th>Password</th>
+          </tr>
+        </table>
+      </div>
+		</div></center>
+		<p>Unfortunately, this is a bad idea because while encryption is very secure, the password that I use to encrypt is stored in the code. Even if I encrypted the encryption password itself and did everything on the server instead of on your computer, Encryption is an algorithm that is designed to be reversible, and so you could (with time, lots of time) crack the encryption software and get all of the passwords. One of the biggest concerns is that an old site that uses encryption for storing their passwords might have all of their passwords leaked as a result of them using an outdated algorithm. Then, since lots of people use the same password for all of their accounts, their identity is at risk.</p>
+		<h3>Section 3: Hashing</h3>
+		<p>If you're not storing your passwords with encryption, then what do you do? If encryption is a reversible algorithm, then the next step up would be using an irreversible algorithm. How would you do that? Take the numbers 7 and 23. Multiply them and you get 161. But if I gave you just that number, would you be able to break it up into it's prime factors? There is no efficient way of doing this, so probably not without a little time. Hashing algorithms like SHA-1 (Secure Hashing Algorithm 1) basically do the same thing.</p>
+		<center class="center"><div id="demo">
+      <div class="box">
+        <button onClick="registerthree()">Register</button>
+        <button onClick="loginthree()">Log In</button>
+        <div id="threestat" class="stat"></div>
+      </div>
+      <div class="box">
+        <table id="three">
+          <tr>
+            <th class="user">User</th>
+            <th>Password</th>
+          </tr>
+        </table>
+      </div>
+		</div></center>
+		<p>Passwords are not the only thing hashing is used for. Usually, when you are sending files over a connection like the internet, there are people who might change the way your file looks. Instead of sending your file twice, though, you can just hash the file and send that! Why? Notice how in the demo each password was the same length. Large files could be hashed down to that length too. Therefore, the two main requirements of a hashing algorithm is that it is fast, and that every output is <strong>unique</strong>. Of course, there is no <i>perfect</i> hashing algorithm, so there are often things called "Hash Collisions." Of course, the letter A could collide with the letters "sdjfhsjkf786f9876t4yhuedfkrtcgjsdtyvb" so you shouldn't worry about hash collisions that much. Also, a main goal of hashing algorithm developers is to minimize these collisions, and make sure that collisions are not likely. Below I include a picture of how the password storing actually works in this situation.</p>
+		<img src="Password Storing.png" id="img1">
+		<h3>Hashing and Salting</h3>
+		<p>Unfortunately, hashing is no longer considered the most secure method. Previously, hashing would eliminate all but the most basic "guess until you get in" methods, but with the advent of the internet, a website can hash a bunch of things, and then someone can come along with a hash and the website would check it against it's database. Therefore, people use hashing and salting.</p>
+		<center class="center"><div id="demo">
+      <div class="box">
+        <button onClick="registerfour()">Register</button>
+        <button onClick="loginfour()">Log In</button>
+        <div id="fourstat" class="stat"></div>
+      </div>
+      <div class="box">
+        <table id="four">
+          <tr>
+            <th class="user">User</th>
+            <th>Password</th>
+						<th>Salt</th>
+          </tr>
+        </table>
+      </div>
+		</div></center>
+		<p>
+			When you use this method, you generate a random string of characters called a "salt". This "salt" is put in to the passowrd (hence it's name) and then the whole thing is hashed. This salt is then stored on the server in plain text. You may think that this is unsecure because somebody can just take the salt and figure out the password, but remember that a hash is irreversible. This prevents the problem above because every common password is appended with a random string and it would take way too long to hash all of those combinations. Therefore, this is the most popular method on the web these days for storing passwords.
+		</p>
+		<img src="Password Storing with Salting.png" />
+		<button onClick="DEV()">DEVELOPER BUTTON (DON'T CLICK)</button>
+		<script>
+
+      var one = {
+        users: [],
+        passes: []
+      }
+      function statusupdate(what, who) {
+        statthing = document.getElementById(who + "stat");
+        if (statthing.firstElementChild) {
+          if (statthing.firstElementChild.innerHTML == "<hr>") {statthing.innerHTML = ""}
+        }
+        var newp = document.createElement("div");
+				newp.setAttribute("class", "newupdate");
+        newp.innerHTML = what;
+        statthing.insertBefore(newp, statthing.firstElementChild);
+      }
+      function registerone() {
+        var newuser = prompt("New User Name");
+        var newpass = prompt("New User Password");
+        one.users.push(newuser);
+        statusupdate("user -> server: newusername: " + newuser,"one");
+        one.passes.push(newpass);
+        statusupdate("user -> server: newpassword: " + newpass, "one");
+        var newtr = document.createElement("tr");
+        newtr.innerHTML = "<td>" + newuser + "</td><td>" + newpass + "</td>";
+        document.getElementById("one").appendChild(newtr);
+        statusupdate("server -> user: created new user with username: " + newuser + " password: " + newpass, "one");
+        statusupdate("<hr>","one");
+      }
+      function loginone() {
+        var loggedin = false;
+        var loginuser = prompt("Login User Name");
+        statusupdate("user -> server: loginname: " + loginuser, "one");
+        var loginpass = prompt("Login Password");
+        statusupdate("user -> server: loginpassword: " + loginpass, "one");
+        for (var i = 0; i < one.users.length; i++) {
+          if (one.users[i] == loginuser && one.passes[i] == loginpass) {
+            alert("Succesfully logged in (this means nothing, you can still register and log in)");
+            statusupdate("server -> user: logged in with username: " + loginuser + " password: " + loginpass, "one");
+            loggedin = true;
+          }
+        }
+        if (!loggedin) {
+          alert("Incorrect login details");
+          statusupdate("server -> user: login not matched", "one");
+        }
+        statusupdate("<hr>", "one");
+      }
+
+
+			var two = {
+				users: [],
+				passes: []
+			}
+      function registertwo() {
+        var newuser = prompt("New User Name");
+        var newpass = prompt("New User Password");
+				newpass = sjcl.encrypt("password", newpass);
+        two.users.push(newuser);
+        statusupdate("<strong>user -> server: newusername: </strong>" + newuser,"two");
+        two.passes.push(newpass);
+        statusupdate("<strong>user -> server: newpassword: </strong>" + newpass, "two");
+        var newtr = document.createElement("tr");
+        newtr.innerHTML = "<td>" + newuser + "</td><td>" + newpass + "</td>";
+        document.getElementById("two").appendChild(newtr);
+        statusupdate("<strong>server -> user: created new user with username: </strong>" + newuser + " password: " + newpass, "two");
+        statusupdate("<hr>","two");
+      }
+			function logintwo() {
+        var loggedin = false;
+        var loginuser = prompt("Login User Name");
+        statusupdate("user -> server: loginname: " + loginuser, "two");
+        var loginpass = prompt("Login Password");
+        statusupdate("user -> server: loginpassword: " + loginpass, "two");
+        for (var i = 0; i < two.users.length; i++) {
+          if (two.users[i] == loginuser && sjcl.decrypt("password", two.passes[i]) == loginpass) {
+            alert("Succesfully logged in (this means nothing, you can still register and log in)");
+            statusupdate("server -> user: logged in with username: " + loginuser + " password: " + loginpass, "two");
+            loggedin = true;
+          }
+        }
+				if (!loggedin) {
+          alert("Incorrect login details");
+          statusupdate("server -> user: login not matched", "two");
+        }
+        statusupdate("<hr>", "two");
+			}
+
+			var three = {
+				users: [],
+				passes: []
+			}
+			function registerthree() {
+        var newuser = prompt("New User Name");
+        var newpass = prompt("New User Password");
+				var shaObj = new jsSHA("SHA-1", "TEXT");
+				shaObj.update(newpass);
+				newpass = shaObj.getHash("HEX");
+        three.users.push(newuser);
+        statusupdate("<strong>user -> server: newusername: </strong>" + newuser,"three");
+        three.passes.push(newpass);
+        statusupdate("<strong>user -> server: newpassword: </strong>" + newpass, "three");
+        var newtr = document.createElement("tr");
+        newtr.innerHTML = "<td>" + newuser + "</td><td>" + newpass + "</td>";
+        document.getElementById("three").appendChild(newtr);
+        statusupdate("<strong>server -> user: created new user with username: </strong>" + newuser + " password: " + newpass, "three");
+        statusupdate("<hr>","three");
+      }
+			function loginthree() {
+        var loggedin = false;
+        var loginuser = prompt("Login User Name");
+        statusupdate("user -> server: loginname: " + loginuser, "three");
+        var loginpass = prompt("Login Password");
+				var shaObj = new jsSHA("SHA-1", "TEXT");
+				shaObj.update(loginpass);
+				loginpass = shaObj.getHash("HEX");
+        statusupdate("user -> server: loginpassword: " + loginpass, "three");
+        for (var i = 0; i < three.users.length; i++) {
+          if (three.users[i] == loginuser && three.passes[i] == loginpass) {
+            alert("Succesfully logged in (this means nothing, you can still register and log in)");
+            statusupdate("server -> user: logged in with username: " + loginuser + " <strong>password:</strong> " + loginpass, "three");
+            loggedin = true;
+          }
+        }
+				if (!loggedin) {
+          alert("Incorrect login details");
+          statusupdate("server -> user: login not matched", "three");
+        }
+        statusupdate("<hr>", "three");
+			}
+
+			var four = {
+				users: [],
+				passes: [],
+				salts: []
+			}
+			function gensalt() {
+				return Math.random().toString(36).substring(2); //not REALLY COMPLETELY a copy-paste, but credit to SO user doubletap http://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
+			}
+			function registerfour() {
+        var newuser = prompt("New User Name");
+        var newpass = prompt("New User Password");
+				var newsalt = gensalt();
+				statusupdate("<strong>user -> server: newsalt: </strong>" + newsalt,"four");
+				four.salts.push(newsalt);
+				newpass = newpass + newsalt;
+				var shaObj = new jsSHA("SHA-1", "TEXT");
+				shaObj.update(newpass);
+				newpass = shaObj.getHash("HEX");
+        four.users.push(newuser);
+        statusupdate("<strong>user -> server: newusername: </strong>" + newuser,"four");
+        four.passes.push(newpass);
+        statusupdate("<strong>user -> server: newpassword: </strong>" + newpass, "four");
+        var newtr = document.createElement("tr");
+        newtr.innerHTML = "<td>" + newuser + "</td><td>" + newpass + "</td><td>" + newsalt + "</td>";
+        document.getElementById("four").appendChild(newtr);
+        statusupdate("<strong>server -> user: created new user with username: </strong>" + newuser + " <strong>password:</strong> " + newpass, "four");
+        statusupdate("<hr>","four");
+      }
+			function loginfour() {
+        var loggedin = false;
+        var loginuser = prompt("Login User Name");
+        statusupdate("user -> server: loginname: " + loginuser, "four");
+        var loginpass = prompt("Login Password");
+				/*var shaObj = new jsSHA("SHA-1", "TEXT");
+				shaObj.update(loginpass);
+				loginpass = shaObj.getHash("HEX");
+        statusupdate("user -> server: loginpassword: " + loginpass, "four");*/
+        for (var i = 0; i < four.users.length; i++) {
+          if (four.users[i] == loginuser) {
+						loginpass = loginpass + four.salts[i];
+						var shaObj = new jsSHA("SHA-1", "TEXT");
+						shaObj.update(loginpass);
+						loginpass = shaObj.getHash("HEX");
+       			statusupdate("user -> server: loginpassword: " + loginpass, "four");
+						if (four.passes[i] == loginpass) {
+            	alert("Succesfully logged in (this means nothing, you can still register and log in)");
+            	statusupdate("server -> user: logged in with username: " + loginuser + " <strong>password:</strong> " + loginpass, "four");
+            	loggedin = true;
+						}
+          }
+        }
+				if (!loggedin) {
+          alert("Incorrect login details");
+          statusupdate("server -> user: login not matched", "three");
+        }
+        statusupdate("<hr>", "four");
+			}
+			function DEV() {
+				alert(eval(prompt("don't be stupid")));
+				alert(Math.random().toString(36).substring(7));
+			}
+    </script>
+  </body>
+</html>

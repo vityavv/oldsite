@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>CNN Student News Search</title>
+		<script src="headlines.js"></script>
+		<link href="https://fonts.googleapis.com/css?family=Baloo" rel="stylesheet">
+		<style>
+			html {
+				background-color:blue;
+				color:white;
+				font-family: 'Baloo';
+				margin:0px;
+				padding:0px;
+				font-size: 25px;
+			}
+			h1 {
+				font-size: 100px;
+				margin:0;
+			}
+			#c1 {
+				width:49%;
+				float:left;
+			}
+			#c2 {
+				width:49%;
+				float:right;
+			}
+			select, input {
+				height: 50px;
+				width:100px;
+				text-align:center;
+				font-family: 'Baloo';
+				font-size: 20px;
+			}
+			select {
+				width:150px;
+			}
+			strong {
+				font-size: 30px;
+			}
+			button {
+				width: 200px;
+				height: 100px;
+				text-align:center;
+				background-color:white;
+				color:blue;
+				font-family: 'Baloo';
+				font-size: 50px;
+			}
+		</style>
+	</head>
+	<body><center>
+
+		<h1>CNN Student News Search</h1>
+		<div id="c1">Month:<br>
+		<select onChange="makeNumber()" id="monthSelect">
+			<option value="j">June</option>
+			<option value="m">May</option>
+			<option value="a">April</option>
+			<option value="ma">March</option>
+			<option value="f">February</option>
+			<option value="ja">January</option>
+		</select></div>
+		<div id="c2">Day:
+		<div id="numberGoesHere">
+			<input type="number" id="day" min="1" max="3">
+		</div></div>
+		<br><br><br>
+		<div id="search"><button onClick="searchnow()">Search</button></div>
+		<div id="results"></div>
+		<script>
+			var monthSelect = document.getElementById("monthSelect");
+			var monthDates = {
+				j: 3,
+				m: 31,
+				a: 30,
+				ma: 31,
+				f: 29,
+				ja: 31
+			}
+			function makeNumber() {
+				var month = monthSelect.options[monthSelect.selectedIndex].value;
+				var daysIn = eval("monthDates." + month);
+				document.getElementById("numberGoesHere").innerHTML = "<input type='number' id='day' min='1' max='" + daysIn + "'>";
+			}
+			function searchnow() {
+				var resultArea = document.getElementById("results");
+				resultArea.innerHTML ="";
+				var month = monthSelect.options[monthSelect.selectedIndex].value;
+				var day = document.getElementById("day").value;
+				if (day > (eval("monthDates." + month))) {
+					alert("This is higher than the number of days in that month!");
+				} else {
+					var dailyHeadlines = eval("stories." + month + day);
+					if (!(dailyHeadlines[0] == "Weekend")) {
+						for (var i = 0; i < /*>*/ dailyHeadlines.length; i++) { //that comment was to make it look good in nano
+							var newresult = document.createElement("p");
+							newresult.innerHTML = "<strong>Story " + (i+1) + ":</strong> " + dailyHeadlines[i];
+							resultArea.appendChild(newresult);
+						}
+					} else {
+						resultArea.innerHTML = "<strong>This was a weekend</strong>";
+					}
+				}
+			}
+		</script>
+	</center></body>
+</html>

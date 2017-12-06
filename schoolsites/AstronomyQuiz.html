@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Astronomy Vocabulary Quiz</title>
+		<style>
+			body {
+				background-color: gray;
+				color: white;
+				font-family: "Trebuchet MS", Helvetica, sans-serif;
+			}
+		</style>
+	</head>
+	<body>
+		<center>
+			<h1>Astronomy Vocabulary Quiz</h1>
+			<h2>Made By: Victor Veytsman</h2>
+			<h4>Made for astronomy project in science, Number 29 Class 602</h4>
+			<hr>
+			<div id="container"><button onClick="startq()">Start Quiz</button></div>
+		</center>
+		<script>
+			var container = document.getElementById("container");
+			var next = true;//Are we going to the next question
+			var qNum = 0;
+			var score = 0;
+			var Quiz = { //This is our q/a
+				questions: ["The study of outer space",
+										"A belief that things in space can influence your life",
+										"A picture made by stars",
+										"Apparent change of position of an object when viewed at different angles",
+										"The twelve constellations that get blocked by the sun, one per month",
+										"The name of the north star",
+										"The point at where the earth and the sky meet",
+										"The highest point, ever",
+										"The lowest point, ever",
+										"\"Heavenly\", belonging or relating to heaven in outer space",
+										"Star brightness",
+										"How bright stars appear",
+										"How bright stars actually are",
+										"The fusing of nuclei in 2 or more atoms",
+										"A \"World\" orbiting a star",
+										"A \"World\" orbiting another \"World\"",
+										"The theory that everything orbits the earth",
+										"The theory that everything orbits the sun",
+										"When a planet seems to move backwards",
+										"The sun and everything that orbits it",
+										"A spin on an axis (a day)",
+										"A full orbit around the sun (a year)",
+										"A small \"World\", too small to be a planet",
+										"A rock in space, smaller than a planet and a dwarf planet",
+										"A rock smaller than an asteroid in space",
+										"Shapes the moon looks like in the sky",
+										"Getting bigger, usually used to describe moon phases",
+										"Getting smaller, also usually used to describe moon phases",
+										"A collection of billions of stars",//That's it from Mr.Ron, Folks!
+										"A planet that orbits a star that is not our sun",
+										"A big explosion that only lasts for a few seconds yet is the brightest thing in the universe.",
+										"A rip in gravity, so dense and massive that once you pass a certain point nothing can escape, not even light"
+									],
+				answers:	["astronomy",
+										"astrology",
+										"constellation",
+										"parallax",
+										"zodiac",
+										"polaris",
+										"horizon",
+										"zenith",
+										"nadir",
+										"celestial",
+										"magnitude",
+										"apparent magnitude",
+										"absolute magnitude",
+										"nuclear fusion",
+										"planet",
+										"moon",
+										"geocentric theory",
+										"heliocentric theory",
+										"retrograde motion",
+										"solar system",
+										"rotation",
+										"revolution",
+										"dwarf planet",
+										"asteroid",
+										"meteoroid",
+										"phases",
+										"waxing",
+										"waning",
+										"galaxy",
+										"exoplanet",
+										"supernova",
+										"black hole"
+									],
+				info: 		["Did you know that astronomy was the first science? The earliest writen records were astronomical observations, made by the Babylonians, in around 1600 B.C.",
+									 "Astrology and Astronomy, although having similar names, are completely different concepts.",
+									 "There are officialy 88 constelations in the sky.",
+									 "This is one of the ways how we calculate how far away objects are from earth",
+									 "Your zodiac is <i>not</i> the zodiac seen up in the sky when you are born. Instead it is the zodiac that is <i>blocked</i> by the sun",
+									 "Polaris is so dim in the sky that you can't even see it in some places, but if you look at the two stars at the end of the big dipper, from the bottom one up they point to polaris",
+									 "What use is the horizon? It is the barrier in visual communication (you can't see past the horizon) and it can be used to level aircraft (if the land is on the top I think there is something wrong.)",
+									 "Each place has it's own zenith, and in astrology the nearer something is to that zenith, the stronger the influence.",
+									 "The nadir is the complete opposite of the zenith, and when you're standing on the opposite side of the earth from another person, your nadir and his zenith are the same",
+									 "A celestial sphere is the imaginary sphere on which the sky is, sort of like a dome.",
+									 "Magnitude can mean many different things, and as much as 15 wikipedia articles redirect from it. <a href='https://en.wikipedia.org/wiki/Magnitude' target='_blank'>Wikipedia</a>",
+									 "When the apparent magnitude of stars were being classified, the astronomers found the brightest star in the sky and called it a class 1 star, but brighter stars have been found and now there are negative class values",
+									 "Absolute magnitude is just apparent magnitude but from a fixed distance, that distance being 10 parsecs (yes, parsecs are a measure of distance, no matter what Han Solo tells you.)",
+									 "Nuclear fusion is what powers a star, because when 2 or more atoms collide some energy is lost as a photon of light",
+									 "There are two types of planets: terrestrial and jovian (gas) planets. Terrestrial planets are rocky and solid, while jovian planets, or gas giants, are big balls of gas.",
+									 "There are 181 official moons in the solar system, 8 of which circle dwarf planets, and the planet with the largest amount of moons is jupiter, at 63 moons",
+									 "The Ptolematic order of planets/things outward from earth is: The Moon, Mercury, Venus, Sun, Mars, Jupiter, Saturn, and then the fixed stars.",
+									 "The first suggestion of a heliocentric theory is from 270 B.C., but it was lost (I don't know why)",
+									 "This is one of the explanations of the heliocentric theory, because of the different speed of planets when one passes another it seems that that planet is going backwards, but geocentrists did not believe that the earth moved, therefore they thought this was wrong",
+									 "The solar system is about 4.6 billion years old. A lot of the mass went into the sun, most of the rest went into Jupiter.",
+									 "The earth's rotation is 24 hours long relative to the sun, but 23 hours, 56 minutes and 4 seconds long relative to the stars. The rotation has slowed 1.7 milliseconds in the past century because of the tidal effects the moon has on the earth.",
+									 "Because the earth's revolution is slightly over 365 days, we have leap days! But still, there is always some mistake. <a href='https://www.youtube.com/watch?v=qkt_wmRKYNQ'>Explaining leap years</a>",
+									 "<a href='http://web.gps.caltech.edu/~mbrown/dps.html#table'>How many dwarf planets are there?</a>",
+									 "Asteroids usually reside in the asteroid belt and the kuiper belt. Just in the inner solar system, counting obects larger than 100 meters, there are still over 150 <i>Million</i> asteroids.",
+									 "Most meteoroids are about the size of a pebble and can travel up to 42 kilometers per <i>second</i>",
+									 "The phases of the moon, starting from new moon, are: New Moon, Waxing Crescent, &frac14; Moon, Waxing Gibbous, Full Moon, Waning Gibbous, &frac34; Moon, Waning crescent, New Moon.",
+									 "The phases of the moon take a month to complete because the orbit of the moon is one month long.",
+									 "We only see one side of the moon because it's rotation is equal to it's revolution, making it face us the same way all of the time.",
+									 "Most estamates say that there are about 100-200 <i>billion</i> galaxies, but some people put it as far as 500 <i>billion</i>.",
+									 "Over 1,000 exoplanets have been discovered so far, and the largest one found is almost 7 times the size of jupiter!",
+									 "Supernovae can shine with the brightness of 10 <i>billion</i> suns, and they happen when iron, the element with the most tightly bound nuclei, forms in a star, and no energy can be gotten out of fusion or fission of two iron atoms.",
+									 "If you go into a black hole, around the point of no return if you turned your head to the side you would see... the back of your head. Light orbiting the black hole comes from the back of your head and then orbits around to the front. Another cool fact is that the term used for getting gravitationally stretched is called \"Spagettification\""
+									]
+			}
+			function startq() {
+				if (next) {
+					if (qNum <= 31) {
+						container.innerHTML = "<h2>Question " + (qNum+1) + "</h2><div id='qcont'></div><br><input id='ans' onkeyup='if (event.keyCode == 13) startq()'/><button onClick='startq()'>Next Question</button>";
+						document.getElementById("qcont").innerHTML = Quiz.questions[qNum];
+					} else {
+						container.innerHTML = "<h2>Congrats! You completed the test!</h2><br><p>Your score is " + score + " out of a possible 160";
+					}
+				} else {
+					if (document.getElementById("ans").value.toLowerCase() == Quiz.answers[qNum]) {
+						container.innerHTML = "<h2>Congrats! You got it correct!</h2>";
+						score += 5;
+					} else {
+						container.innerHTML = "<h2>Sorry, you got it wrong</h2><p>The answer was " + Quiz.answers[qNum] + "</p>";
+					}
+					container.innerHTML += Quiz.info[qNum] + "<br><br>";
+					if (qNum == 31) {
+						container.innerHTML += "<button onClick='startq()'>Conclude Test</button>";
+					} else {
+						container.innerHTML += "<button onClick='startq()'>Next Question</button>";
+					}
+					qNum ++;
+				}
+				next = !next;
+			}
+		</script>
+	</body>
+</html>

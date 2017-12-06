@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Drawing</title>
+		<script type="text/javascript" src="gifScripts/LZWEncoder.js"></script>
+		<script type="text/javascript" src="gifScripts/NeuQuant.js"></script>
+		<script type="text/javascript" src="gifScripts/GIFEncoder.js"></script>
+		<script type="text/javascript" src="gifScripts/b64.js"></script>
+		<style>/*to lazy to js ;)*/
+			button#cgifbutton:hover {
+				font-size: 0px;
+			}
+			button#cgifbutton:hover:after {
+				content: attr(data-bin-alt);
+				font-size: 13.3333333px;
+			}
+
+			a {
+				font-size: 1.5em;
+			}
+		</style>
+	</head>
+	<body style="text-align: center;">
+		<button onClick="restart()" id="restart" style="display:none;">Restart</button>
+		<button onClick="playAnim();" id="playbutton">Start</button>
+		Framerate: <span id="frate">3 frames per second</span> | Fast<input type="range" min="50" max="1000" value="300" step="20" onChange="chSpeed(this.value);"/>Slow
+		<button onClick="encodeGif()" id="cgifbutton" data-bin-alt="This might take a while">Create Gif</button><br>
+		<div id="gifFrameThing"></div>
+
+		<canvas id="container" width="500" height="500" style="border: 3px solid black"></canvas><br>
+
+		<button onClick="colorChange()">Change the color</button>
+		<button onClick="colorChange('erase')">Eraser</button>
+		<button onClick="colorChange('pen')">Pen</button>
+		<button onClick="bcClear('clear')">Clear</button>
+		<button onClick="bcClear()">Change Background</button><br>
+		Width: <input type="range" min="5" max="100" value="10" step="5" onChange="chWidth(this.value)"/> <!--New method -- this object -->
+		<br>
+		<p><a href="Anim-instructions.html">Instructions</a></p>
+		<script>
+			//variables for drawing
+			var width = 10, color = "black", bc="white", penColor="black";
+			var cel = document.getElementById("container");
+			var canvas = cel.getContext("2d");
+			var clickd = false;//if clicked
+
+			//variables for animating
+			var frame = 0;
+			var frames = [["white"]]; //frames: [ [frame1 circles, seperate by space] [frame2] ]
+			var player, playing = false; //this is my setinterval
+			var creating = true;
+			var speed = 500;
+
+
+			//events
+			cel.addEventListener("mousedown", function(e){clickd=true;drawSomething(e);}, false);//draw dot, make clicking true for dragging
+			cel.addEventListener("mouseup", function(e){clickd=false;}, false);//stop drawing
+			cel.addEventListener("mousemove", drawSomething, false);//\/
+
+			//draw
+			function drawSomething(event) {
+				if (clickd) {//if u are dragging
+					canvas.beginPath();
+					var newX = event.clientX - cel.getBoundingClientRect().left;
+					var newY = event.clientY - cel.getBoundingClientRect().top;
+					canvas.arc(newX, newY, width, 0, 2*Math.PI);
+					canvas.fill();//make circle
+					frames[frame].push([newX, newY, color, width]);
+				}
+			}
+
+			//clear, background color
+			function bcClear(param) {
+				if (!param) {
+					bc = prompt("What do you want the background color to be?", "CSS colors only");
+					frames[frame][0] = bc;
+				}
+				canvas.fillStyle = bc;
+				canvas.fillRect(0, 0, cel.offsetWidth, cel.offsetHeight);
+				canvas.fill();
+				canvas.fillStyle = color;
+				if (!param) {drawFrame();}
+				if (creating) { frames[frame].push([250, 250, bc, 710]); }
+			}
+
+			//change color
+			function colorChange(param) {
+				if (param == 'erase') {
+					color = bc;
+				} else if (param != 'pen') {
+					color = prompt("What color would you like?", "CSS colors only");
+					penColor = color;
+				} else {
+					color = penColor;
+				}
+				canvas.fillStyle = color;
+			}
+
+			//Change width
+			function chWidth(newWidth) {
+				width = newWidth;
+			}
+
+			function chSpeed(newSpeed) {
+				speed = newSpeed;
+				document.getElementById("frate").innerHTML = Math.round(1000/newSpeed) + " per second---";
+			}
+			//draw a certain frame
+			function drawFrame() {
+				for (var i = 0; i < frames[frame].length; i++) {
+					canvas.fillStyle = frames[frame][i][2];
+					canvas.beginPath();
+					canvas.arc(frames[frame][i][0], frames[frame][i][1], frames[frame][i][3]/*width*/, 0, 2*Math.PI);//the +1 is for bc
+					canvas.fill();
+					canvas.fillStyle = color;
+				}
+			}
+
+
+			function chFrame(change) {
+				if (change == 'n') {
+					if (creating) {
+						frames.push([]);
+					}
+					if (frame >= frames.length - 1) {
+						clearInterval(player);
+						playing = false;
+						document.getElementById("playbutton").innerHTML = "Play";
+						frame = 0;
+					} else {
+						frame += 1;
+						drawFrame();
+					}
+				}
+			}
+
+			//play our glorious animation!!!!!
+			function playAnim() {
+				if (playing) {
+					clearInterval(player);
+					document.getElementById("playbutton").innerHTML = "Play";
+					if (creating) {
+						creating = false;
+						document.getElementById("restart").style.display="inline-block";
+					}
+				} else {
+					if (frame == 0 || frame == frames.length) {
+						canvas.fillStyle = bc;
+						canvas.fillRect(-3, -3, cel.offsetWidth, cel.offsetHeight);
+						canvas.fill();
+						canvas.fillStyle = color;
+					}
+					player = setInterval(function(){chFrame('n')}, speed);
+					document.getElementById("playbutton").innerHTML = "Stop";
+				}
+				playing = !playing;
+			}
+
+			function restart() {
+				frames=[];
+				bcClear("clear");
+				creating = true;
+				playAnim();
+				setTimeout(playAnim, 500);
+			}
+
+			//Gif encoder
+			function encodeGif() {
+				canvas.fillStyle = bc;
+				canvas.fillRect(-3, -3, cel.offsetWidth, cel.offsetHeight);
+				canvas.fill();
+				canvas.fillStyle = color;
+				var gifmaker = new GIFEncoder();//gif encoder bois
+				gifmaker.setDelay(speed);
+				gifmaker.setRepeat(0);
+				gifmaker.start();
+				console.log(frames.length);
+				for (frame = 0; frame < frames.length; frame++) {
+					drawFrame();
+					gifmaker.addFrame(canvas);
+				}
+				gifmaker.finish();
+				var binary_gif = gifmaker.stream().getData();
+				var data_url = 'data:image/gif;base64,' + encode64(binary_gif);
+				var newGif = document.createElement("a");
+				newGif.setAttribute("href", data_url);
+				newGif.setAttribute("download","");
+				newGif.innerHTML="Download Gif";
+				document.body.appendChild(newGif);
+				document.body.appendChild(document.createElement("br"));
+				var gifImage = document.createElement("img");
+				gifImage.src=data_url;
+				document.body.appendChild(gifImage);
+			}
+		</script>
+	</body>
+</html>
