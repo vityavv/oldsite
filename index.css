@@ -3,6 +3,11 @@
 	font-family: "Encode Sans",  sans-serif;
 }
 
+.container {
+	max-width: 40em;
+	margin: auto;
+}
+
 #header {
 	position: fixed;
 	display: block;
@@ -35,39 +40,23 @@ li h1 {
 	padding: 0;
 	margin: 0;
 }
-
-
-
-
-p {
-	left: 20%;
-	right: 20%;
-	position: relative;
-	width: 60%;
-}
 .heading {
 	font-size: 3em;
-	position: relative;
-	left: 18%;
 	margin: 0.25em;
-	width: 64%;
 }
 h3.heading, h2.heading {
 	font-size: 1.75em;
-	left: 18.25%;
 }
 
 div.sliderer {
 	animation-name: sliderer;
 	animation-duration: 15s;
 	animation-iteration-count: infinite;
-	width: 60%;
+	width: 100%;
 	background-image: url("images/SubwayGuesser.png");
 	background-repeat: no-repeat;
 	background-position: top center;
-	height: 40%;
-	position:relative;
-	left: 20%;
+	height: 20em;
 }
 @keyframes sliderer {
 	0% {background-image: url("images/SubwayGuesser.png");}
@@ -80,12 +69,10 @@ div.pannerer {
 	animation-name: pannerer;
 	animation-duration: 15s;
 	animation-iteration-count: infinite;
-	width: 60%;
+	width: 100%;
 	background-repeat: no-repeat;
 	background-position: top center;
-	height: 40%;
-	position: relative;
-	left: 20%;
+	height: 20em;
 }
 @keyframes pannerer {
 	0% {background-position: top center;}
