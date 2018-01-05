@@ -24,6 +24,7 @@
 ul {
 	list-style-type: none;
 	margin: 8px 0;
+	padding: 0;
 }
 li {
 	display: inline-block;
@@ -63,6 +64,7 @@ div.sliderer {
 	background-repeat: no-repeat;
 	background-position: top center;
 	height: 20em;
+	margin: 2% 0;
 }
 @keyframes sliderer {
 	0% {background-image: url("images/SubwayGuesser.png");}
@@ -79,6 +81,7 @@ div.pannerer {
 	background-repeat: no-repeat;
 	background-position: top center;
 	height: 20em;
+	margin: 2% 0;
 }
 @keyframes pannerer {
 	0% {background-position: top center;}
