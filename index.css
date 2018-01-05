@@ -10,6 +10,13 @@
 	margin-top: 100px;
 }
 
+.fp-prev {
+	left: 0 !important;
+}
+.fp-next {
+	right: 0 !important;
+}
+
 #header {
 	position: fixed;
 	display: block;
