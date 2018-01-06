@@ -4,8 +4,10 @@
 }
 
 .container {
-	max-width: 40em;
+	max-width: 50em;
 	margin: auto;
+	margin-bottom: 100px;
+	margin-top: 100px;
 }
 
 #header {
@@ -22,6 +24,7 @@
 ul {
 	list-style-type: none;
 	margin: 8px 0;
+	padding: 0;
 }
 li {
 	display: inline-block;
@@ -42,10 +45,14 @@ li h1 {
 }
 .heading {
 	font-size: 3em;
-	margin: 0.25em;
+	margin: 0.25em 0;
 }
 h3.heading, h2.heading {
 	font-size: 1.75em;
+	margin: 0.25em 2%;
+}
+p {
+	margin: 0 4%;
 }
 
 div.sliderer {
@@ -57,6 +64,7 @@ div.sliderer {
 	background-repeat: no-repeat;
 	background-position: top center;
 	height: 20em;
+	margin: 2% 0;
 }
 @keyframes sliderer {
 	0% {background-image: url("images/SubwayGuesser.png");}
@@ -73,6 +81,7 @@ div.pannerer {
 	background-repeat: no-repeat;
 	background-position: top center;
 	height: 20em;
+	margin: 2% 0;
 }
 @keyframes pannerer {
 	0% {background-position: top center;}
