@@ -1,6 +1,6 @@
 * {
 	color: #eeeeee;
-	font-family: "Encode Sans",  sans-serif;
+	font-family: "Roboto", sans-serif;
 }
 
 .container {
@@ -52,6 +52,7 @@ h3.heading, h2.heading {
 	margin: 0.25em 2%;
 }
 p {
+	font-size: 1.1em;
 	margin: 0 4%;
 }
 
