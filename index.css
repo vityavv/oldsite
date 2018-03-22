@@ -1,6 +1,6 @@
 * {
 	color: #eeeeee;
-	font-family: "Encode Sans",  sans-serif;
+	font-family: "Roboto", sans-serif;
 }
 
 .container {
@@ -59,6 +59,7 @@ h3.heading, h2.heading {
 	margin: 0.25em 2%;
 }
 p {
+	font-size: 1.1em;
 	margin: 0 4%;
 }
 
@@ -95,53 +96,28 @@ div.pannerer {
 	50% {background-position: bottom center;}
 	100% {background-position: top center;}
 }
-#magic8ball {
-	background-image: url("images/Magic8Ball.png");
-}
-#subwayguesser {
-	background-image: url("images/SubwayGuesser.png");
-}
-#drawanim {
-	background-image: url("images/DrawAnim.png");
-}
-#gazingrainbow {
-	background-image: url("images/GazingRainbow.gif");
-}
-#tungsten {
-	background-image: url("images/Tungsten.png");
-}
-#ballsncubes {
-	background-image: url("images/ballsncubes.png");
-	background-size: cover;
-}
-#torturebaby {
-	background-image: url("images/torturebaby.png");
-}
-#pic2017 {
-	background-image: url("images/pic2017.png");
-}
-#news {
-	background-image: url("images/news.png");
-}
-#worksux {
-	background-image: url("images/worksux.png");
-}
-#song {
-	background-image: url("images/song.png");
-}
-#AstronomyQuiz {
-	background-image: url("images/AstronomyQuiz.png");
-}
-#snake {
-	background-image: url("images/snake++.png");
-}
 #big {
 	font-size: 100px;
 	vertical-align: 20%;
 }
-#editingtool {
-	background-image: url("images/editingtool.png");
+#magic8ball { background-image: url("images/Magic8Ball.png"); }
+#subwayguesser { background-image: url("images/SubwayGuesser.png"); }
+#drawanim { background-image: url("images/DrawAnim.png"); }
+#gazingrainbow { background-image: url("images/GazingRainbow.gif"); }
+#tungsten { background-image: url("images/Tungsten.png"); }
+#ballsncubes {
+	background-image: url("images/ballsncubes.png");
+	background-size: cover;
 }
-#firsteverrice {
-	background-image: url("images/workingFullscreen.png");
-}
+#torturebaby { background-image: url("images/torturebaby.png"); }
+#pic2017 { background-image: url("images/pic2017.png"); }
+#news { background-image: url("images/news.png"); }
+#worksux { background-image: url("images/worksux.png"); }
+#song { background-image: url("images/song.png"); }
+#AstronomyQuiz { background-image: url("images/AstronomyQuiz.png"); }
+#snake { background-image: url("images/snake++.png"); }
+#editingtool { background-image: url("images/editingtool.png"); }
+#firsteverrice { background-image: url("images/workingFullscreen.png"); }
+#erlhumtim { background-image: url("images/erlhumtim.png"); }
+#the-jungle { background-image: url("images/the-jungle.png"); }
+#discordbot { background-image: url("images/discordbot.png"); }
