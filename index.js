@@ -4,6 +4,7 @@ $(document).ready(function() {
 		menu: "#menu",
 		sectionsColor: ["#1c1c1c", "#1c1c1c", "#1c1c1c", "#1c1c1c", "#1c1c1c"],
 		scrollOverflow: true,
+		licenseKey: "OPEN-SOURCE-GPLV3-LICENSE"
 		//verticalCentered: false
 	});
 	let isTouchDevice = navigator.userAgent.match(/(iPhone|iPod|iPad|Android|playbook|silk|BlackBerry|BB10|Windows Phone|Tizen|Bada|webOS|IEMobile|Opera Mini)/); //from fullpage.js, if my pr never gets through (it probably won't)

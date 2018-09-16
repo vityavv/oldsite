@@ -1,0 +1,7 @@
+
+<div class="slide" data-anchor="qdb-api">
+	<div class="container">
+		<h1 class="heading"><a href="https://npmjs.com/qdb-api-plus">qdb-api-plus</a> and <a href="https://npmjs.com/qdb-cli">qdb-cli</a></h1>
+		<p>I recently found out about and started reading <a href="http://bash.org">bash.org</a>, an online quote database that contains quotes from IRC (internet chat). I was wondering if there was an API for it when, lo and behold, I found <a href="https://npmjs.com/qdb-api">qdb-api</a>, an NPM module that scraped the website for quotes. However, it used axios, a request module, and as a big fan of reducing the use of dependencies I decided to fork it and make a pull request. However, I kept changing things and adding new features, so </p>
+	</div>
+</div>
