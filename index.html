@@ -2,10 +2,10 @@
 <html>
 <head>
 	<!-- FULLPAGE -->
-	<link rel="stylesheet" type="text/css" href="https://alvarotrigo.com/fullPage/jquery.fullPage.css" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	<script src="https://alvarotrigo.com/fullPage/vendors/scrolloverflow.min.js"></script><!--required for scrolling inside of a section/slide-->
-	<script src="https://alvarotrigo.com/fullPage/jquery.fullPage.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.0.2/fullpage.min.css" />
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.0.2/vendors/scrolloverflow.min.js"></script><!--required for scrolling inside of a section/slide-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.0.2/fullpage.min.js"></script>
 
 	<!-- Roboto Font -->
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -112,6 +112,20 @@
 					<br><p>Use the right and left arrows on your screen or swipe on mobile</p>
 					<h3 class="heading">Current Project</h3>
 					<p>Woah. I'm working on a lot of stuff right now. I made the site mobile-responsive so that's pretty cool</p>
+				</div>
+			</div>
+			<div class="slide" data-anchor="scms">
+				<div class="container">
+					<h1 class="heading"><a href="https://github.com/vityavv/scms">SCMS</a></h1>
+					<p>This is scms. I made it because I was in the shower and I thought "What if I made something like wordpress, but actually good?" So I did that. I'm aware that a lot of other cmses (CMS is a Content Management System) exist, but this one was a great learning experience for me. It's the first projec t I ever made with express.js and I find it quite enjoyable to use, despite the fact that it's dependency tree is like 151 modules fat. I also used EJS for rendering stuff and better-sqlite3 (what's so better about it? It's sync, but way faster than boring old sqlite3) as a database. It includes features such as markdown support, thanks to marked, multiple user accounts (and full on password protection with bcrypt), drafts, and image uploads. It's made for web developers, because you can host it yourself and the templates are simple and designed to be expanded upon. I hope you like it</p>
+					<div class="pannerer" id="scms"></div>
+				</div>
+			</div>
+			<div class="slide" data-anchor="simple-pastebin">
+				<div class="container">
+					<h1 class="heading"><a href="https://github.com/vityavv/simple-pastebin">Simple-Pastebin</a></h1>
+					<p>I made a pastebin because I don't like solarized (which hastebin uses) and the other ones are a faff. Plus, this was a great way for me to improve my node.js server skills. You can host it yourself, and change the theme to whatever you like! It also includes an API, and hastebin-like language prediction. It uses sqlite3 as a database and highlight.js for storage, however the server is plain HTTP. Check out the <a href="https://paste.vvvland.ml">Live demo</a> here.</p>
+					<div class="pannerer" id="simple-pastebin"></div>
 				</div>
 			</div>
 			<div class="slide" data-anchor="qdb-api">
